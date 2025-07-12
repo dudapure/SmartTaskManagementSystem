@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: SmartTaskManagementApi   
+    env: dotnet
+    plan: free
+    region: frankfurt
+    branch: main
+    rootDir: SmartTaskManagementApi
+    buildCommand: dotnet build
+    startCommand: dotnet SmartTaskManagementApi.dll
