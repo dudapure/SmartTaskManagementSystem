@@ -5,19 +5,21 @@ import { LoginModel } from '../../Models/login.model';
 import { AuthenticateResponse } from '../../Models/AuthenticateResponse.model';
 import { User } from '../../Models/user.model';
 import { UpdateProfileDto } from '../../Models/update-profile.dto';
+import { environment } from '../../../environments/environment';
+
+const API_URL = environment.apiUrl;  
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = API_URL;  
 
   constructor(private http: HttpClient) {
     console.log('AuthService initialized');
   }
 
   login(loginModel: LoginModel): Observable<AuthenticateResponse> {
-    console.log('Sending login request:', loginModel);
     return this.http.post<AuthenticateResponse>(
       `${this.apiUrl}/user/login`,
       loginModel
@@ -40,10 +42,12 @@ export class AuthService {
   register(user: User): Observable<any> {
     return this.http.post(`${this.apiUrl}/user/register`, user);
   }
+
   logout(): void {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('currentUser');
   }
+
   changePassword(data: {
     userId: number;
     oldPassword: string;
@@ -57,7 +61,7 @@ export class AuthService {
           'Content-Type': 'application/json',
         },
       }
-    ); // ✅ Full URL
+    );
   }
 
   updateProfile(data: UpdateProfileDto): Observable<any> {

@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../../Models/user.model';
 import { AdminUser } from '../../Models/admin-user.model';
+import { environment } from '../../../environments/environment';
+
+const API_URL = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'http://localhost:5000/api/user';
+  private apiUrl = API_URL;
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<User[]> {

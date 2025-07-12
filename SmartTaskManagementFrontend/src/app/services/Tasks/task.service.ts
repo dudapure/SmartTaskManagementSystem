@@ -3,10 +3,13 @@ import { Injectable } from '@angular/core';
 import { Task } from '../../Models/task.model';
 import { Observable } from 'rxjs';
 import { TaskDto } from '../../Models/TaskDto';
+import { environment } from '../../../environments/environment';
+
+const API_URL = environment.apiUrl;
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = 'http://localhost:5000/api/task';
+  private apiUrl = API_URL;
 
   constructor(private http: HttpClient) {}
 
