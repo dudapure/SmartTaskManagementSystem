@@ -1,7 +1,6 @@
 services:
   - type: web
     name: SmartTaskManagementApi
-    runtime: dotnet
     plan: free
     region: frankfurt
     branch: main
