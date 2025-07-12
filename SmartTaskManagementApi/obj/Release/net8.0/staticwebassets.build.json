@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "GZU1zlBqcJj3Y14F7ZXQUR5sTun9zbXxbBROCue7yOw=",
+  "Source": "SmartTaskManagementApi",
+  "BasePath": "_content/SmartTaskManagementApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

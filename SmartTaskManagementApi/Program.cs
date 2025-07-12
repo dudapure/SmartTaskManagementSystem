@@ -3,21 +3,17 @@ using Microsoft.EntityFrameworkCore;
 using SmartTaskManagementApi.Interfaces;
 using SmartTaskManagementApi.Services;
 using SmartTaskManagementApi.Models;
-using System.Net;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Add services to the container.
-// Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         options.SerializerSettings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.None;
     });
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 
@@ -53,9 +49,30 @@ app.UseCors("AllowAll");
 // app.UseHttpsRedirection();
 app.UseAuthorization();
 
-app.MapControllers(); // Ensure controllers are mapped correctly
+app.MapControllers(); 
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate(); // Apply any pending migrations
 
+    // Check if any Admin exists
+    if (!context.Users.Any(u => u.Role == "Admin"))
+    {
+        var admin = new User
+        {
+            UserName = "Default Admin",
+            Email = "admin@smart.com",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123"),
+            Role = "Admin",
+            IsActive = true,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        context.Users.Add(admin);
+        context.SaveChanges();
+    }
+}
 
 
 var summaries = new[]
@@ -65,7 +82,7 @@ var summaries = new[]
 
 app.MapGet("/weatherforecast", () =>
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
+    var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
             DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

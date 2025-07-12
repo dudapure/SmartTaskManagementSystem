@@ -220,6 +220,8 @@ G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Microsof
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Mono.TextTemplating.dll
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Npgsql.dll
+G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 G:\Smart Task Management System\SmartTaskManagementApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -328,6 +330,7 @@ G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\SmartTas
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\SmartTaskManagementApi.csproj.CoreCompileInputs.cache
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\SmartTaskManagementApi.MvcApplicationPartsAssemblyInfo.cs
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\SmartTaskManagementApi.MvcApplicationPartsAssemblyInfo.cache
+G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\SmartTaskManagementApi.sourcelink.json
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\staticwebassets.build.json
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\staticwebassets.development.json
 G:\Smart Task Management System\SmartTaskManagementApi\obj\Debug\net8.0\staticwebassets\msbuild.SmartTaskManagementApi.Microsoft.AspNetCore.StaticWebAssets.props
