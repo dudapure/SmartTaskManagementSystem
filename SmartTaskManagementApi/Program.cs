@@ -57,7 +57,7 @@ using (var scope = app.Services.CreateScope())
     context.Database.Migrate(); // Apply any pending migrations
 
     // Check if any Admin exists
-    if (!context.Users.Any(u => u.Role == "Admin"))
+    if (!context.Users.Any(u => u.Role == "admin"))
     {
         var admin = new User
         {
