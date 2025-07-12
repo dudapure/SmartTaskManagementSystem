@@ -1,0 +1,82 @@
+.page-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-table,
+.task-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td,
+.task-table th,
+.task-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.inactive {
+  background-color: #f8d7da;
+}
+
+.btn {
+  padding: 6px 10px;
+  margin: 0 2px;
+  font-size: 13px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+}
+
+.btn.view {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn.delete {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn.toggle {
+  background-color: #ffc107;
+  color: black;
+}
+
+.btn.close {
+  background-color: #6c757d;
+  color: white;
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination button {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

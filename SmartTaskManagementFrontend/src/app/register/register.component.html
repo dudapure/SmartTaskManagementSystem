@@ -1,0 +1,131 @@
+<div class="register-page">
+  <div class="register-container">
+    <!-- Left Image Panel -->
+    <div class="image-section">
+      <img
+        src="https://img.freepik.com/free-vector/online-registration-concept-illustration_114360-7886.jpg"
+        alt="Register Smart Task"
+      />
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-section">
+      <h2>📝 Register Your Account</h2>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="mt-3">
+        <label for="UserName" class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="UserName"
+          formControlName="UserName"
+          placeholder="Enter Your Name..."
+          [ngClass]="{
+            'is-invalid':
+              registerForm.get('UserName')?.invalid &&
+              registerForm.get('UserName')?.touched
+          }"
+        />
+        <div
+          *ngIf="
+            registerForm.get('UserName')?.invalid &&
+            registerForm.get('UserName')?.touched
+          "
+          class="invalid-feedback"
+        >
+          Invalid Name
+        </div>
+
+        <label for="Email" class="form-label mt-2">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="Email"
+          formControlName="Email"
+          placeholder="Enter Your Email..."
+          [ngClass]="{
+            'is-invalid':
+              registerForm.get('Email')?.invalid &&
+              registerForm.get('Email')?.touched
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('Email')?.invalid &&
+            registerForm.get('Email')?.touched
+          "
+        >
+          Invalid Email
+        </div>
+
+        <label for="PasswordHash" class="form-label mt-2">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="PasswordHash"
+          formControlName="PasswordHash"
+          placeholder="Enter Your Password..."
+          [ngClass]="{
+            'is-invalid':
+              registerForm.get('PasswordHash')?.invalid &&
+              registerForm.get('PasswordHash')?.touched
+          }"
+        />
+        <div
+          class="invalid-feedback"
+          *ngIf="
+            registerForm.get('PasswordHash')?.invalid &&
+            registerForm.get('PasswordHash')?.touched
+          "
+        >
+          Password must be at least 8 characters long
+        </div>
+
+        <label for="confirmPassword" class="form-label mt-2"
+          >Confirm Password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          placeholder="Confirm Password"
+          [ngClass]="{
+            'is-invalid':
+              (registerForm.get('confirmPassword')?.invalid &&
+                registerForm.get('confirmPassword')?.touched) ||
+              registerForm.get('confirmPassword')?.hasError('mismatch')
+          }"
+        />
+        <div
+          *ngIf="
+            registerForm.get('confirmPassword')?.hasError('mismatch') &&
+            registerForm.get('confirmPassword')?.touched
+          "
+          class="invalid-feedback"
+        >
+          Passwords must match
+        </div>
+        <div
+          *ngIf="
+            registerForm.get('confirmPassword')?.invalid &&
+            registerForm.get('confirmPassword')?.touched &&
+            !registerForm.get('confirmPassword')?.hasError('mismatch')
+          "
+          class="invalid-feedback"
+        >
+          Confirm Password is required
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="register-button mt-4"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

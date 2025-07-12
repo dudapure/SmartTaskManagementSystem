@@ -1,0 +1,124 @@
+<div class="task-container">
+  <h2 class="page-title">📋 Create New Task</h2>
+  <p class="subtitle">Fill in the task details to assign work efficiently</p>
+
+  <div class="card">
+    <form [formGroup]="taskForm" (ngSubmit)="createTask()" class="form-grid">
+      <input
+        formControlName="title"
+        placeholder="Task Title"
+        class="form-control"
+      />
+      <textarea
+        formControlName="description"
+        placeholder="Description"
+        class="form-control"
+      ></textarea>
+
+      <select formControlName="categoryId" class="form-control">
+        <option [value]="null" disabled selected>Select Category</option>
+        <option
+          *ngFor="let category of categories"
+          [value]="category.categoryId"
+        >
+          {{ category.name }}
+        </option>
+      </select>
+
+      <select formControlName="priority" class="form-control">
+        <option value="" disabled selected hidden>Select Priority</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+
+      <input type="date" formControlName="dueDate" class="form-control" />
+
+      <select formControlName="status" class="form-control">
+        <option value="" disabled selected hidden>Select Status</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+
+      <select formControlName="userId" class="form-control">
+        <option [value]="null" disabled selected>Select User</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.userName }} ({{ user.email }})
+        </option>
+      </select>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="taskForm.invalid"
+      >
+        ➕ Create Task
+      </button>
+    </form>
+  </div>
+
+  <h2 class="section-heading">🗂️ Tasks by Category</h2>
+
+  <div *ngFor="let category of categories" class="accordion-item">
+    <button
+      class="accordion-header"
+      (click)="category.expanded = !category.expanded"
+    >
+      {{ category.name }} <span>{{ category.expanded ? "▲" : "▼" }}</span>
+    </button>
+
+    <div class="accordion-body" *ngIf="category.expanded">
+      <ng-container *ngIf="(category.tasks?.length || 0) > 0; else noTasks">
+        <table class="task-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Due Date</th>
+              <th>Assigned To</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let task of category.tasks
+                  | slice
+                    : (currentPage[category.categoryId!] - 1) * pageSize
+                    : currentPage[category.categoryId!] * pageSize
+              "
+            >
+              <td>{{ task.title }}</td>
+              <td>{{ task.status }}</td>
+              <td>{{ task.priority }}</td>
+              <td>{{ task.dueDate | date }}</td>
+              <td>{{ getUserName(task.userId) }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+          <button
+            (click)="prevPage(category.categoryId!)"
+            [disabled]="currentPage[category.categoryId!] === 1"
+          >
+            Prev
+          </button>
+          <button
+            (click)="
+              nextPage(category.categoryId!, category.tasks?.length || 0)
+            "
+          >
+            Next
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #noTasks>
+        <p class="no-tasks">No tasks under this category.</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

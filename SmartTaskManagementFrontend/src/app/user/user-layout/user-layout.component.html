@@ -1,0 +1,39 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2 class="sidebar-title">Smart User</h2>
+    <ul class="sidebar-links">
+      <li>
+        <a routerLink="/userhome/dashboard" routerLinkActive="active"
+          >📊 Dashboard</a
+        >
+      </li>
+      <li>
+        <a routerLink="/userhome/tasks" routerLinkActive="active"
+          >✅ My Tasks</a
+        >
+      </li>
+      <li>
+        <a routerLink="/userhome/upcomingTasks" routerLinkActive="active"
+          >⏳ Upcoming Tasks</a
+        >
+      </li>
+      <li>
+        <a routerLink="/userhome/profile" routerLinkActive="active"
+          >👤 Profile</a
+        >
+      </li>
+      <li>
+        <a routerLink="/userhome/settings" routerLinkActive="active"
+          >⚙️ Settings</a
+        >
+      </li>
+      <li><a href="#" class="text-danger" (click)="logout()">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

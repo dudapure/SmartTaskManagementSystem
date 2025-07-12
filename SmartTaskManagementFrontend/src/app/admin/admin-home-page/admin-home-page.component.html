@@ -1,0 +1,18 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2 class="sidebar-title">Smart Admin</h2>
+    <ul class="sidebar-links">
+      <li><a routerLink="dashboard" routerLinkActive="active">📊 Dashboard</a></li>
+      <li><a routerLink="categories" routerLinkActive="active">🗂️ Categories</a></li>
+      <li><a routerLink="tasks" routerLinkActive="active">✅ Tasks</a></li>
+      <li><a routerLink="users" routerLinkActive="active">👥 Users</a></li>
+      <li><a href="#" (click)="logout()">🚪 Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Main Content (this is where children components will load) -->
+  <div class="main-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

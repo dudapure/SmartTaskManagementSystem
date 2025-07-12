@@ -1,0 +1,167 @@
+<div class="container-fluid px-4">
+  <h2 class="fw-bold my-4">📅 Tasks Due in Next 7 Days</h2>
+
+  <!-- 🔢 Task Completion Progress -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <label class="fw-semibold"
+        >Progress: {{ completedCount }} / {{ filteredTasks.length }} tasks
+        completed</label
+      >
+      <div class="progress mt-2" style="height: 25px">
+        <div
+          class="progress-bar bg-success"
+          role="progressbar"
+          [style.width.%]="progressPercent"
+          [attr.aria-valuenow]="progressPercent"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          {{ progressPercent }}%
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔍 Filters -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body row gy-3">
+      <div class="col-md-4">
+        <label class="form-label">Category</label>
+        <select
+          id="category"
+          [(ngModel)]="filterCategory"
+          class="form-select"
+          (change)="applyFilters()"
+        >
+          <option value="">All</option>
+          <option *ngFor="let category of allCategories" [value]="category">
+            {{ category }}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Priority</label>
+        <select
+          id="priority"
+          [(ngModel)]="filterPriority"
+          class="form-select"
+          (change)="applyFilters()"
+        >
+          <option value="">All</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Status</label>
+        <select
+          id="status"
+          [(ngModel)]="filterStatus"
+          class="form-select"
+          (change)="applyFilters()"
+        >
+          <option value="">All</option>
+          <option value="Pending">Pending</option>
+          <option value="InProgress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Task Table -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th (click)="sortTasks('title')" style="cursor: pointer">
+                Title ⬍
+              </th>
+              <th>Category</th>
+              <th>Status</th>
+              <th (click)="sortTasks('priority')" style="cursor: pointer">
+                Priority ⬍
+              </th>
+              <th (click)="sortTasks('dueDate')" style="cursor: pointer">
+                Due Date ⬍
+              </th>
+              <th>Days Left</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let task of paginatedTasks"
+              [ngClass]="{
+                'table-danger': getDaysLeft(task.dueDate) <= 2,
+                'table-warning':
+                  getDaysLeft(task.dueDate) > 2 &&
+                  getDaysLeft(task.dueDate) <= 5,
+                'table-success': getDaysLeft(task.dueDate) > 5
+              }"
+            >
+              <td>{{ task.title }}</td>
+              <td>{{ task.categoryName }}</td>
+              <td>
+                <select
+                  class="form-select form-select-sm w-auto"
+                  [(ngModel)]="task.status"
+                  (change)="changeStatus(task)"
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="InProgress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </td>
+              <td>
+                <span
+                  class="badge"
+                  [ngClass]="{
+                    'text-bg-danger': task.priority === 'High',
+                    'text-bg-warning': task.priority === 'Medium',
+                    'text-bg-success': task.priority === 'Low'
+                  }"
+                >
+                  {{ task.priority }}
+                </span>
+              </td>
+              <td>{{ task.dueDate | date : "mediumDate" }}</td>
+              <td>{{ getDaysLeft(task.dueDate) }} day(s)</td>
+            </tr>
+            <tr *ngIf="paginatedTasks.length === 0">
+              <td colspan="6" class="text-center text-muted">
+                No upcoming tasks match your filters.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📄 Pagination -->
+  <nav *ngIf="totalPages > 1">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)">Prev</a>
+      </li>
+
+      <li
+        class="page-item"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        [class.active]="i + 1 === currentPage"
+      >
+        <a class="page-link" (click)="changePage(i + 1)">{{ i + 1 }}</a>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

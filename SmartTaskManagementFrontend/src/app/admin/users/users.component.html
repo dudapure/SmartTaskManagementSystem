@@ -1,0 +1,76 @@
+<h2 class="page-title">👥 All Users</h2>
+
+<!-- User Table -->
+<div class="table-wrapper">
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Registered On</th>
+        <th>Total Tasks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let user of paginatedUsers"
+        [ngClass]="{ inactive: !user.isActive }"
+      >
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.createdAt | date : "shortDate" }}</td>
+        <td>{{ user.totalTasks }}</td>
+        <td>
+          <button class="btn view" (click)="viewTasks(user)">📋 View</button>
+          <button class="btn delete" (click)="deleteUser(user.id)">
+            ❌ Delete
+          </button>
+          <button class="btn toggle" (click)="toggleActive(user)">
+            {{ user.isActive ? "Deactivate" : "Activate" }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">⏮ Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      Next ⏭
+    </button>
+  </div>
+</div>
+
+<!-- Task View Section -->
+<div *ngIf="showTasks" class="task-view">
+  <h3>📋 Tasks for {{ selectedUserEmail }}</h3>
+  <button class="btn close" (click)="closeTasks()">✖ Close</button>
+
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Due Date</th>
+        <th>Created On</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of selectedUserTasks">
+        <td>{{ task.title }}</td>
+        <td>{{ task.status }}</td>
+        <td>{{ task.priority }}</td>
+        <td>{{ task.dueDate | date : "shortDate" }}</td>
+        <td>{{ task.createdAt | date : "shortDate" }}</td>
+        <td>{{ task.categoryName }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

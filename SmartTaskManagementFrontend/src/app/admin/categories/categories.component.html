@@ -1,0 +1,63 @@
+<div class="category-container">
+  <h2 class="page-title">📁 Category Management</h2>
+  <p class="subtitle">
+    Create and organize categories for better task management
+  </p>
+
+  <!-- Add New Category Form -->
+  <div class="card form-card">
+    <h3><i class="fas fa-plus-circle"></i> Add New Category</h3>
+    <form
+      (ngSubmit)="addCategory()"
+      [formGroup]="categoryForm"
+      class="form-flex"
+    >
+      <input
+        type="text"
+        formControlName="categoryName"
+        placeholder="Enter category name"
+        class="form-control"
+      />
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="categoryForm.invalid"
+      >
+        ➕ Add
+      </button>
+    </form>
+  </div>
+
+  <!-- Existing Categories Table -->
+  <div class="card list-card">
+    <h3><i class="fas fa-folder-open"></i> Existing Categories</h3>
+
+    <table class="category-table" *ngIf="categories.length; else noCategory">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Category Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ category.name }}</td>
+          <td>
+            <button
+              class="btn btn-danger"
+              (click)="deleteCategory(category.categoryId)"
+            >
+              🗑 Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #noCategory>
+      <p class="no-data">No categories found.</p>
+    </ng-template>
+  </div>
+</div>

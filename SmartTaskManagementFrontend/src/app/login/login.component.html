@@ -1,0 +1,77 @@
+<div class="login-page">
+  <div class="login-container">
+    <!-- Left Image Panel -->
+    <div class="image-section">
+      <img
+        src="https://img.freepik.com/free-vector/project-management-concept-illustration_114360-5898.jpg"
+        alt="Smart Task Illustration"
+      />
+    </div>
+
+    <!-- Login Form Panel -->
+    <div class="form-section">
+      <h2>🔐 Login to Smart Task Manager</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Enter your email"
+          [ngClass]="{
+            'is-invalid':
+              loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+          }"
+        />
+        <div
+          *ngIf="
+            loginForm.get('email')?.invalid && loginForm.get('email')?.touched
+          "
+          class="invalid-feedback"
+        >
+          Please enter a valid email address.
+        </div>
+
+        <label for="password" class="form-label mt-3">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          placeholder="Enter your password"
+          [ngClass]="{
+            'is-invalid':
+              loginForm.get('password')?.invalid &&
+              loginForm.get('password')?.touched
+          }"
+        />
+        <div
+          *ngIf="
+            loginForm.get('password')?.invalid &&
+            loginForm.get('password')?.touched
+          "
+          class="invalid-feedback"
+        >
+          Password must be at least 8 characters long.
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="login-button"
+        >
+          Login
+        </button>
+
+        <div *ngIf="errorMessage" class="error mt-2">{{ errorMessage }}</div>
+      </form>
+
+      <p class="mt-3">
+        Don't have an account?
+        <a routerLink="/register">Register Here</a>
+      </p>
+    </div>
+  </div>
+</div>

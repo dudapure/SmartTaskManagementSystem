@@ -1,0 +1,82 @@
+<h2 class="mb-4 fw-bold">⚙️ Settings</h2>
+
+<!-- 🔐 Change Password -->
+<h4>🔒 Change Password</h4>
+<div class="card p-4 shadow-sm mb-4">
+  <div *ngIf="message" class="alert alert-success">{{ message }}</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <form (ngSubmit)="changePassword()">
+    <div class="mb-3">
+      <label for="oldPassword" class="form-label">Old Password</label>
+      <input
+        type="password"
+        id="oldPassword"
+        [(ngModel)]="oldPassword"
+        name="oldPassword"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="newPassword" class="form-label">New Password</label>
+      <input
+        type="password"
+        id="newPassword"
+        [(ngModel)]="newPassword"
+        name="newPassword"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="confirmPassword" class="form-label"
+        >Confirm New Password</label
+      >
+      <input
+        type="password"
+        id="confirmPassword"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        class="form-control"
+        required
+      />
+    </div>
+    <button class="btn btn-primary">Update Password</button>
+  </form>
+</div>
+
+<!-- 📝 Update Profile -->
+<h4>📝 Update Profile</h4>
+<div class="card p-4 shadow-sm mb-4">
+  <div *ngIf="profileMessage" class="alert alert-success">
+    {{ profileMessage }}
+  </div>
+  <div *ngIf="profileError" class="alert alert-danger">{{ profileError }}</div>
+
+  <form (ngSubmit)="updateProfile()">
+    <div class="mb-3">
+      <label for="userName" class="form-label">Username</label>
+      <input
+        type="text"
+        id="userName"
+        [(ngModel)]="updatedUser.userName"
+        name="userName"
+        class="form-control"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        id="email"
+        [(ngModel)]="updatedUser.email"
+        name="email"
+        class="form-control"
+        required
+      />
+    </div>
+    <button class="btn btn-success">Save Changes</button>
+  </form>
+</div>

@@ -1,0 +1,117 @@
+<div class="user-layout d-flex">
+  <!-- Main Content -->
+  <div class="flex-grow-1 p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold">📋 My Tasks</h2>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body row gy-3">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Category</label>
+          <select
+            [(ngModel)]="categoryFilter"
+            (change)="applyFilters()"
+            class="form-select"
+          >
+            <option value="">All</option>
+            <option *ngFor="let cat of categories" [value]="cat.categoryId">
+              {{ cat.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Priority</label>
+          <select
+            [(ngModel)]="priorityFilter"
+            (change)="applyFilters()"
+            class="form-select"
+          >
+            <option value="">All</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Sort By</label>
+          <select
+            [(ngModel)]="sortBy"
+            (change)="applyFilters()"
+            class="form-select"
+          >
+            <option value="">None</option>
+            <option value="dueDate">Due Date</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tasks Table -->
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title mb-3 fw-semibold">📝 Task List</h4>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead class="table-light">
+              <tr>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Due Date</th>
+                <th>Progress</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let task of filteredTasks">
+                <td>{{ task.title }}</td>
+                <td>{{ task.category?.name }}</td>
+
+                <!-- ✅ Status Editable Dropdown -->
+                <td>
+                  <select
+                    class="form-select form-select-sm"
+                    [ngModel]="task.status"
+                    (ngModelChange)="updateStatus(task, $event)"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="InProgress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </td>
+
+                <td>
+                  <span class="badge bg-secondary">{{ task.priority }}</span>
+                </td>
+
+                <td>{{ task.dueDate | date : "mediumDate" }}</td>
+
+                <td>
+                  <span
+                    class="badge rounded-pill px-3 py-2"
+                    [ngClass]="{
+                      'bg-secondary': task.status === 'Pending',
+                      'bg-info text-dark': task.status === 'InProgress',
+                      'bg-success': task.status === 'Completed'
+                    }"
+                  >
+                    {{ getDisplayStatus(task.status) }}
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="filteredTasks.length === 0">
+                <td colspan="6" class="text-center text-muted py-4">
+                  No tasks found.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
