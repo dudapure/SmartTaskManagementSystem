@@ -1,0 +1,9 @@
+[build]
+  base = "."
+  publish = "dist/smart-task-management-frontend/browser"
+  command = "ng build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
