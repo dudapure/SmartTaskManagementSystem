@@ -64,7 +64,7 @@ using (var scope = app.Services.CreateScope())
             UserName = "Default Admin",
             Email = "admin@smart.com",
             PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@12"),
-            Role = "Admin",
+            Role = "admin",
             IsActive = true,
             CreatedAt = DateTime.UtcNow
         };
