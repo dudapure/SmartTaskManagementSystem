@@ -25,10 +25,10 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader());
+    options.AddPolicy("AllowFrontend", policy =>
+        policy.WithOrigins("https://smart-task-management.netlify.app")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
 });
 
 
@@ -44,7 +44,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Apply CORS middleware before other middleware
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 
 // app.UseHttpsRedirection();
 app.UseAuthorization();
