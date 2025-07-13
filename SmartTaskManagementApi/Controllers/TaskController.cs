@@ -22,35 +22,35 @@ namespace SmartTaskManagementApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTask(TaskItem task)
         {
-    try
-    {
-        // Optional validation for user/category existence
-        if (!_context.Users.Any(u => u.Id == task.UserId))
-            return BadRequest("Invalid UserId.");
+            try
+            {
+                if (!_context.Users.Any(u => u.Id == task.UserId))
+                    return BadRequest("Invalid UserId.");
 
-        if (!_context.Categories.Any(c => c.CategoryId == task.CategoryId))
-            return BadRequest("Invalid CategoryId.");
+                if (!_context.Categories.Any(c => c.CategoryId == task.CategoryId))
+                    return BadRequest("Invalid CategoryId.");
 
-        task.CreatedAt = DateTime.UtcNow;
-        _context.Tasks.Add(task);
-        await _context.SaveChangesAsync();
-        return Ok(task);
-    }
-    catch (DbUpdateException ex)
-    {
-        // Log full inner exception
-        Console.WriteLine("🔥 DB UPDATE ERROR:");
-        Console.WriteLine(ex.InnerException?.Message ?? ex.Message);
+                // Fix: ensure DateTime is UTC
+                task.DueDate = DateTime.SpecifyKind(task.DueDate, DateTimeKind.Utc);
+                task.CreatedAt = DateTime.UtcNow;
 
-        return StatusCode(500, "An error occurred while saving the task. " + (ex.InnerException?.Message ?? ex.Message));
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("🔥 GENERAL ERROR:");
-        Console.WriteLine(ex.Message);
-        return StatusCode(500, "An unexpected error occurred.");
-    }
-}
+                _context.Tasks.Add(task);
+                await _context.SaveChangesAsync();
+                return Ok(task);
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine("🔥 DB UPDATE ERROR:");
+                Console.WriteLine(ex.InnerException?.Message ?? ex.Message);
+                return StatusCode(500, "An error occurred while saving the task. " + (ex.InnerException?.Message ?? ex.Message));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("🔥 GENERAL ERROR:");
+                Console.WriteLine(ex.Message);
+                return StatusCode(500, "An unexpected error occurred.");
+            }
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetAllTasks()
