@@ -10,7 +10,7 @@ const API_URL = environment.apiUrl;
   providedIn: 'root',
 })
 export class CategoryService {
-  private apiUrl = API_URL;
+  private apiUrl = `${API_URL}/categories`;
   constructor(private http: HttpClient) {}
 
   getCategories(): Observable<Category[]> {

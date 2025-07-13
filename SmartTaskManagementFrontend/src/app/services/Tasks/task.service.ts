@@ -7,9 +7,10 @@ import { environment } from '../../../environments/environment';
 
 const API_URL = environment.apiUrl;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root', })
 export class TaskService {
-  private apiUrl = API_URL;
+private apiUrl = `${API_URL}/task`;
+
 
   constructor(private http: HttpClient) {}
 

@@ -11,7 +11,7 @@ const API_URL = environment.apiUrl;
   providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = API_URL;
+private apiUrl = `${API_URL}/user`;
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<User[]> {
